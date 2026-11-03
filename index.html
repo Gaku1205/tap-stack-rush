@@ -7,15 +7,13 @@
     <meta name="description" content="動くブロックが重なった瞬間にタップ。30秒でどこまで高く積めるか。称号つきの結果をシェアしよう。" />
     <meta property="og:title" content="TAP STACK RUSH ｜ 30秒の積み上げ勝負" />
     <meta property="og:description" content="親指1本、30秒。止めて、重ねて、空まで積め。" />
-    <!-- 公開アドレス（SNS は相対URLを読まない）。変えるときはこの4か所を一緒に -->
+    <!-- 公開アドレス（SNS は相対URLを読まない）。仮の値なので、実際のアドレスに合わせる -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tap-stack-rush.vercel.app/" />
-    <meta property="og:image" content="https://tap-stack-rush.vercel.app/og.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="TAP STACK RUSH のロゴと、積み木の塔、称号のシール" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://tap-stack-rush.vercel.app/og.png" />
+    <!-- public/og.png（1200×630）を置いたら、次の meta を足す:
+         og:image と twitter:image（https://<公開アドレス>/og.png）、og:image:width=1200、og:image:height=630、
+         og:image:alt、twitter:card=summary_large_image
+         画像が無いまま足すと 404 になるので、画像が入るまで足さない -->
     <meta name="theme-color" content="#FFE14D" />
     <style>
       html, body { margin: 0; height: 100%; background: #FFE14D; overflow: hidden; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }

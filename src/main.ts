@@ -1,4 +1,5 @@
 import { Game, type Scene } from "./game";
+import { aPressedStates, justPressed } from "./lib/gamepad";
 import { shareText } from "./lib/result";
 import { drawOgCard, OG_HEIGHT, OG_WIDTH } from "./ogCard";
 
@@ -180,11 +181,25 @@ if (scene === "og") {
 else if (scene === "result") game.showDemoResult();
 else sceneChanged("title");
 
+// ゲームパッドの A ボタン：スペースキーと同じ（押し始めの1回だけ）
+let padPrev: boolean[] = [];
+function pollGamepad(): void {
+  const pads = typeof navigator.getGamepads === "function" ? navigator.getGamepads() : null;
+  const now = aPressedStates(pads);
+  const pressed = justPressed(padPrev, now);
+  padPrev = now;
+  if (!pressed) return;
+  game.sound.unlock();
+  if (game.scene === "over") retry();
+  else game.action();
+}
+
 let last = performance.now();
 function frame(now: number): void {
   // 遅い端末でも30秒が30秒になるように、実際の時間で進める（タブを離れた時だけ切る）
   const raw = (now - last) / 1000;
   last = now;
+  pollGamepad();
   game.update(Math.min(0.05, raw), L, Math.min(1, raw));
   game.render(L);
   requestAnimationFrame(frame);

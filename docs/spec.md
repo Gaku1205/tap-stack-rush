@@ -19,6 +19,13 @@
 
 （ページごとに、何を出して何ができるか）
 
+### SNS のカード画像（og:image）
+
+- URL が SNS（X・Instagram など）に貼られたときに出る、1200×630 の静的な画像 1 枚。`public/og.png` に置き、`dist/og.png` として配信する。結果ごとには変えない
+- `/?scene=og` で、同じ絵を 1200×630 の canvas に開ける（撮影用。`.github/scripts/shot.mjs` で撮って `public/og.png` に置く。ビルドでは作らない）
+- `index.html` の meta：`og:image`・`og:image:width`（1200）・`og:image:height`（630）・`og:image:alt`・`og:url`・`og:type`、`twitter:card`（`summary_large_image`）、`twitter:image`。画像と URL は絶対URL（本番の公開アドレス。`index.html` の1か所にまとめる）
+- 見た目は `docs/design.md` の「SNS のカード画像」
+
 ## あとで（今は入れない）
 
 -

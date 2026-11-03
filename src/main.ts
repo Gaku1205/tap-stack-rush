@@ -1,5 +1,6 @@
 import { Game, type Scene } from "./game";
 import { shareText } from "./lib/result";
+import { drawOgCard, OG_HEIGHT, OG_WIDTH } from "./ogCard";
 
 // 入口：canvas とボタン（音・スタート・もう一回・シェア）をつなぐ
 const canvas = document.querySelector<HTMLCanvasElement>("#game");
@@ -158,12 +159,24 @@ function resize(): void {
   startBtn.style.top = `${gy}px`;
   startBtn.style.height = `${L.h - gy}px`;
 }
-window.addEventListener("resize", resize);
-resize();
-
-// URL で場面を直接開く（撮影用）：?scene=play / ?scene=result
+// URL で場面を直接開く（撮影用）：?scene=play / ?scene=result / ?scene=og
 const scene = new URLSearchParams(location.search).get("scene");
-if (scene === "play") game.startDemo(14);
+if (scene !== "og") {
+  window.addEventListener("resize", resize);
+  resize();
+}
+if (scene === "og") {
+  // SNS のカード画像（1200×630）を1枚だけ描く。撮って public/og.png に置く
+  ui.remove();
+  canvas.style.width = `${OG_WIDTH}px`;
+  canvas.style.height = `${OG_HEIGHT}px`;
+  canvas.width = OG_WIDTH;
+  canvas.height = OG_HEIGHT;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  document.documentElement.style.overflow = "auto";
+  document.body.style.overflow = "auto";
+  drawOgCard(ctx);
+} else if (scene === "play") game.startDemo(14);
 else if (scene === "result") game.showDemoResult();
 else sceneChanged("title");
 
@@ -176,7 +189,7 @@ function frame(now: number): void {
   game.render(L);
   requestAnimationFrame(frame);
 }
-requestAnimationFrame(frame);
+if (scene !== "og") requestAnimationFrame(frame);
 // 別のタブに移っていた間は、時計を進めない
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) last = performance.now();

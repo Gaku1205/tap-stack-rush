@@ -43,7 +43,9 @@
 
 ## 文字
 
-- 書体：端末の極太ゴシック（`src/draw.ts` の `JP_FONT`：Hiragino Sans → Noto Sans JP → Yu Gothic → Meiryo）。太さは全部 900。英字のロゴは `LATIN_FONT`（Arial Black が先）。外のフォントは読み込まない
+- 書体：同梱の極太ゴシック M PLUS 1（太さ 900。CSS／canvas での名前は `TSR M PLUS 1`）を先頭にし、端末の書体を予備として後ろに残す（`src/draw.ts` の `JP_FONT`：TSR M PLUS 1 → Hiragino Sans → Noto Sans JP → Yu Gothic → Meiryo）。太さは全部 900。DOM の `.ui`（`index.html`）も同じ順。英字のロゴは `LATIN_FONT`（Arial Black が先）
+- 同梱フォントの場所：`public/fonts/mplus1-900.woff2`（`npm run fonts` で作る。`npm run build`・`npm run dev` の前に自動で動き、画面に出る文字だけを抜き出す。git には入れない）。ライセンスは SIL OFL 1.1（全文は `public/fonts/OFL.txt`、`dist/` にも入る）。`index.html` の `@font-face`（`font-display: swap`）で同じオリジンから読む。外部サイトのフォントは読み込まない。同梱のフォントのみ
+- 同梱フォントに無い文字（`→` など）は予備の端末書体で出る。canvas はフォントの読み込みを待ってから最初の絵を描く（待ちは最長 1.5 秒）
 - スコアの数字だけは自作の「積み木の数字」（`src/digits.ts`。3×5 マスの角丸の四角、クリーム＋墨の輪郭＋下に影）
 - 大きさ（スマホ 390px のとき）
 

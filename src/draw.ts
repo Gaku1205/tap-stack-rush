@@ -3,8 +3,19 @@ import { hexToRgb, INK, mix, rgbToCss } from "./lib/color";
 import { roundRect } from "./digits";
 
 export const JP_FONT =
-  '"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP","Yu Gothic",YuGothic,Meiryo,system-ui,sans-serif';
+  '"TSR M PLUS 1","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP","Yu Gothic",YuGothic,Meiryo,system-ui,sans-serif';
 export const LATIN_FONT = `"Arial Black","Helvetica Neue",Arial,${JP_FONT}`;
+
+/** 同梱フォントの読み込みを待つ（最長 1.5 秒。失敗しても進む＝予備の書体で描く） */
+export async function loadBundledFont(): Promise<void> {
+  if (typeof document === "undefined" || !document.fonts) return;
+  const timeout = new Promise<void>((res) => window.setTimeout(res, 1500));
+  const load = document.fonts
+    .load('900 24px "TSR M PLUS 1"', "止めて、重ねて、空まで積め。タップ")
+    .then(() => undefined)
+    .catch(() => undefined);
+  await Promise.race([load, timeout]);
+}
 
 export function font(size: number, latin = false): string {
   return `900 ${Math.round(size)}px ${latin ? LATIN_FONT : JP_FONT}`;

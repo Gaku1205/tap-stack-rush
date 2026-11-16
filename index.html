@@ -18,9 +18,10 @@
     <meta name="twitter:image" content="https://tap-stack-rush.vercel.app/og.png" />
     <meta name="theme-color" content="#FFE14D" />
     <style>
+      @font-face { font-family: "TSR M PLUS 1"; src: url("/fonts/mplus1-900.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
       html, body { margin: 0; height: 100%; background: #FFE14D; overflow: hidden; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
       canvas { display: block; width: 100vw; height: 100dvh; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-      .ui { position: fixed; top: 0; bottom: 0; pointer-events: none; font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, system-ui, sans-serif; font-weight: 900; }
+      .ui { position: fixed; top: 0; bottom: 0; pointer-events: none; font-family: "TSR M PLUS 1", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, system-ui, sans-serif; font-weight: 900; }
       .ui button { pointer-events: auto; font: inherit; cursor: pointer; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
       .ui button:focus-visible { outline: none; box-shadow: 0 0 0 3px #FFF6E5, 0 0 0 7px #141414; }
       .btn-icon { position: absolute; top: max(10px, env(safe-area-inset-top)); right: 10px; width: 48px; height: 48px; border-radius: 14px; border: 3px solid #141414; background: #FFF6E5; box-shadow: 0 4px 0 #141414; display: grid; place-items: center; padding: 0; }

@@ -1,6 +1,7 @@
 import { Game, type Scene } from "./game";
 import { aPressedStates, justPressed } from "./lib/gamepad";
 import { shareText } from "./lib/result";
+import { loadBundledFont } from "./draw";
 import { drawOgCard, OG_HEIGHT, OG_WIDTH } from "./ogCard";
 
 // 入口：canvas とボタン（音・スタート・もう一回・シェア）をつなぐ
@@ -176,7 +177,8 @@ if (scene === "og") {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   document.documentElement.style.overflow = "auto";
   document.body.style.overflow = "auto";
-  drawOgCard(ctx);
+  const og = ctx;
+  void loadBundledFont().then(() => drawOgCard(og));
 } else if (scene === "play") game.startDemo(14);
 else if (scene === "result") game.showDemoResult();
 else sceneChanged("title");
@@ -204,7 +206,13 @@ function frame(now: number): void {
   game.render(L);
   requestAnimationFrame(frame);
 }
-if (scene !== "og") requestAnimationFrame(frame);
+// 同梱フォントを待ってから描き始める（別の書体で一瞬出るのを防ぐ）
+if (scene !== "og") {
+  void loadBundledFont().then(() => {
+    last = performance.now();
+    requestAnimationFrame(frame);
+  });
+}
 // 別のタブに移っていた間は、時計を進めない
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) last = performance.now();

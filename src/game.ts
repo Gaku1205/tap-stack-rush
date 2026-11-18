@@ -2,6 +2,7 @@
 import { Sound } from "./audio";
 import { blockTextWidth, drawBlockText, roundRect } from "./digits";
 import { drawBurst, drawRays, drawSlab, drawSticker, fitSize, font, strokeText } from "./draw";
+import { burstRotation, motionOffset } from "./lib/motion";
 import { BLOCK_COLORS, CREAM, INK, inkOn, rgbToCss, skyAt, type Rgb } from "./lib/color";
 import { commentFor, heightMeters, titleFor, type EndReason, type RunStats } from "./lib/result";
 import { BASE_WIDTH, drop, SLAB_HEIGHT, speedFor, swingX, type Slab } from "./lib/stack";
@@ -643,7 +644,7 @@ export class Game {
     const text = String(this.floors);
     const cell = Math.min(L.sw * 0.052, 24);
     const y = 58;
-    drawBlockText(ctx, text, L.cx, y - this.scorePop * 6, cell, CREAM, INK, this.reduced ? 0 : this.scorePop);
+    drawBlockText(ctx, text, L.cx, y - motionOffset(this.reduced, this.scorePop * 6), cell, CREAM, INK, this.reduced ? 0 : this.scorePop);
     ctx.font = font(15);
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
@@ -654,7 +655,7 @@ export class Game {
       ctx.save();
       ctx.translate(L.cx + tw / 2 + 34, y + cell * 1.5);
       ctx.rotate(-0.12);
-      drawBurst(ctx, 0, 0, 30, "#FF8FB1", 12, this.clock);
+      drawBurst(ctx, 0, 0, 30, "#FF8FB1", 12, burstRotation(this.reduced, this.clock));
       ctx.font = font(15);
       ctx.fillStyle = INK;
       ctx.textBaseline = "middle";
@@ -686,7 +687,7 @@ export class Game {
       const fade = t > 0.75 ? 1 - (t - 0.75) / 0.25 : 1;
       const big = p.sub === "";
       const px = big ? L.cx : Math.min(L.sx + L.sw - 90, Math.max(L.sx + 90, L.cx + p.x * L.s));
-      const py = big ? L.h * 0.4 : this.sy(L, p.y) - t * 30;
+      const py = big ? L.h * 0.4 : this.sy(L, p.y) - motionOffset(this.reduced, t * 30);
       ctx.save();
       ctx.globalAlpha = fade;
       ctx.translate(px, py);

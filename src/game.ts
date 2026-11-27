@@ -824,11 +824,11 @@ export class Game {
       ctx.save();
       ctx.translate(Math.min(L.sx + sw - 50, L.cx + blockTextWidth(text, cell) / 2 + 34), sy + cell * 3.6);
       ctx.rotate(0.2);
-      const r = 40 * ease(0.4);
+      const r = 44 * ease(0.4);
       if (r > 1) {
         drawBurst(ctx, 0, 0, r, "#FFC83D", 12);
         ctx.fillStyle = INK;
-        ctx.font = font(r * 0.3);
+        ctx.font = font(r * 0.34);
         ctx.textBaseline = "middle";
         ctx.fillText("ベスト", 0, -r * 0.14);
         ctx.fillText("更新！", 0, r * 0.2);
